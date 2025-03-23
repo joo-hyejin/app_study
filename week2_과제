@@ -1,0 +1,80 @@
+// 실습1 - 구구단 출력 문제
+void main() {
+  for (var dan = 2; dan <= 9; dan++) {
+    print('====$dan단====');
+    for (var i = 1; i <= 9; i++) {
+      print('$dan * $i = ${dan * i}');
+    }
+  }
+}
+
+// 실습2 - 정사각형의 길이를 입력하고 사각형을 출력하라
+// 꽉 찬 사각형, 테두리 사각형, / 표시, \ 표시, X 표시 사각형
+void main() {
+  var n = 10;
+  var result = '';
+  
+  for (var y=0; y<n; y++){
+    for (var x = 0; x<n; x++){
+      var c = f1(x, y, n) || f2(x,y,n) || f3(x,y,n);
+      if(c) {
+        result += '='; 
+      } else {
+        result += ' ';
+      }
+    }
+    result += '\n';
+  }
+  
+  print(result);
+}
+
+bool f1(int x, int y, int size){
+  return x==0 
+    || y==0 
+    || x==size-1 
+    || y==size-1;
+}
+
+bool f2(int x, int y, int size) {
+  return x==y;
+}
+
+bool f3(int x, int y, int size) {
+  return x+y==size-1;
+}
+
+
+// 실습3 - 년/월/일을 입력하면 요일을 출력하라
+void main() {
+  var input = '2025-03-25';
+  var output = DateTime.parse(input);
+  print(output.day); // 일자 추출
+  var day = output.weekday; // weekday 요일 속성 월(1) ~ 일(7)
+
+  String dayname = '';
+
+  switch (day) {
+    case 1:
+      dayname = "월";
+      break;
+    case 2:
+      dayname = "화";
+      break;
+    case 3:
+      dayname = "수";
+      break;
+    case 4:
+      dayname = "목";
+      break;
+    case 5:
+      dayname = "금";
+      break;
+    case 6:
+      dayname = "토";
+      break;
+    default:
+      dayname = "일";
+  }
+  print(dayname);
+}
