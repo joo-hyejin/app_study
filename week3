@@ -1,0 +1,289 @@
+#3주차
+void main() {
+  for (var i = 0; i < 10; i++) {
+    print("Hello ${i + 1}");
+  }
+}
+
+
+class Person {
+  String _name = ""; // ?로 null 처리 String? name;
+  int _age = 0;
+
+  // 생성자
+  Person(this._name, this._age);
+
+  // 게터 세터
+  String get name => _name;
+  int get age => _age;
+
+  void addOneYear() {
+    _age++;
+  }
+}
+
+void main() {
+  var p = Person('주혜진', 23);
+  print([p.name, p.age]);
+
+  // p.name = "주징징";
+  // p.age = 100;
+  p.addOneYear();
+
+  print([p.name, p.age]);
+
+  var p2 = Person("김민서", 23);
+  print([p2.name, p2.age]);
+  print(p._name); // '_'는 모듈(한 파일) 내에서는 접근 가능. 모듈 밖에서는 접근 불가.
+}
+
+
+
+class Rectangle {
+  num left, top, width, height;
+
+  Rectangle(this.left, this.top, this.width, this.height);
+
+  num get right => left + width;
+  set right(num value) => left = value - width;
+  num get bottom => top + height;
+  set bottom(num value) => top = value - height;
+}
+
+class Rectangle2 {
+  num left, top, right, bottom;
+
+  Rectangle2(this.left, this.top, this.right, this.bottom);
+
+  num get width => right - left;
+  set width(num value) => right = left + value;
+  num get height => bottom - top;
+  set height(num value) => bottom = top + value;
+}
+
+void main() {
+  var r1 = Rectangle(5, 10, 25, 30);
+  print(
+    '[left, top, width, height] = ${[r1.left, r1.top, r1.width, r1.height]}',
+  );
+  print('[right, bottom] = ${[r1.right, r1.bottom]}');
+
+  var r2 = Rectangle2(5, 10, 30, 40);
+  print(
+    '[left, top, width, height] = ${[r2.left, r2.top, r2.width, r2.height]}',
+  );
+  print('[width, height] = ${[r2.right, r2.bottom]}');
+}
+
+
+
+class Hero {
+  String name = '영웅';
+
+  void run() {
+    print("뛴다!");
+  }
+}
+
+class SuperHero extends Hero {
+  @override
+  void run() {
+    // 객체지향프로그래밍의 특징 - 다형성
+    super.run();
+    this.fly();
+  }
+
+  void fly() {
+    print("난다!");
+  }
+}
+
+void main() {
+  var h1 = SuperHero();
+  h1.run();
+  // hero.fly();
+  print(h1.name);
+
+  var h2 = Hero();
+  h2.run();
+
+  print("");
+
+  List<Hero> heroes = [h1, h2]; // 부모 클래스 타입으로 묶음
+  heroes.forEach((h) => h.run()); // 
+}
+
+
+
+abstract class Monster {
+  // 추상클래스
+  void attack();
+}
+
+class Goblin implements Monster {
+  // 구현 클래스
+  @override
+  void attack() {
+    print("고블린 어택");
+  }
+}
+
+class Bat implements Monster {
+  @override
+  void attack() {
+    print("할퀴기 공격");
+  }
+}
+
+void main() {
+  Goblin g1 = Goblin();
+  Bat b1 = Bat();
+
+  // 아래의 코드에서 Goblin 또는 Bat이 드러나지 않기 때문에 단순한 코드 전개가 가능하다.
+  List<Monster> monsters = [g1, b1];
+  monsters.forEach((m) => m.attack());
+}
+
+
+
+// 열거 타입 : 가독성을 위해 사용
+// kind, type, mode
+
+enum Status { login, logout }
+
+void main() {
+  var s1 = Status.login;
+  var s2 = Status.logout;
+
+  switch (s2) {
+    case Status.login:
+      print("로그인");
+      break;
+    case Status.logout:
+      print("로그아웃");
+      break;
+  }
+}
+
+
+
+void main() {
+  var lottoNums = {5, 6, 11, 13, 17, 21};
+  //  var lottoNums = [5, 6, 11, 13, 17, 21];
+  /*  lottoNums.forEach((num) {
+    print(num);
+  });
+  lottoNums.forEach((num) => print(num));
+  lottoNums.forEach(print);
+*/
+  /*
+  lottoNums.remove(6);
+  lottoNums.add(9);
+  lottoNums.add(9); // 세트는 중복 비허용
+
+  print(lottoNums);
+*/
+  //  print(lottoNums[0]);
+  //  lottoNums[0] = 1;
+
+  //  print(lottoNums);
+
+  var map = {"한국": "서울", "일본": "도쿄"};
+  print(map["한국"]);
+  map["중국"] = "북경";
+  print(map);
+}
+
+
+
+void funcA() {
+  print('왼쪽');
+}
+
+void funcB() {
+  print('오른쪽');
+}
+
+void main() {
+  var isChoice = true;
+  var func = isChoice == true ? funcA : funcB;
+
+  func(); // 선언적 프로그래밍
+
+  /*
+  if (isChoice == true) {
+    funcA();
+  } else {
+    funcB();
+  }
+*/
+}
+
+
+
+Function getFunc(bool isChoice) {
+  return isChoice == true ? () => "왼쪽" : () => "오른쪽";
+}
+
+void main() {
+  var func = getFunc(false);
+  var result = func();
+  print(result);
+}
+
+
+
+void main() {
+  var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  print(nums);
+  print(nums.length);
+
+  var evenNums = nums.where((n) => n % 2 == 0).toList();
+  print(evenNums);
+
+  var strNums = evenNums.map((n) => '#$n').toList(); // Iterable을 List로 변환
+  print(strNums);
+
+  var nums2 = [1, 2, 3, 3, 3, 4, 5, 6, 6];
+  print(nums2);
+  print(nums2.toSet().toList()); // 중복값 제거 후 List를 출력
+
+  print(nums2.any((e) => e == 3));
+
+  nums2
+    ..add(-1)
+    ..add(-2)
+    ..add(-3);
+  print(nums2);
+}
+
+
+
+void main() {
+  bool promoActive = false;
+  /*
+  if (promoActive) {
+    print([1, 2, 3, 4, 5, 6]);
+  } else {
+    print([1, 2, 3, 4, 5]);
+  }
+*/
+  print([1, 2, 3, 4, 5, if (promoActive) 6]);
+
+  var listOfInts = [1, 2, 3];
+  var listOfStrings = ['#0', for (var i in listOfInts) '#$i'];
+  print(listOfStrings);
+}
+
+
+
+void main() {
+  String? name; // 타입 오른쪽에 ?를 적어 null 처리
+  print(name); // name이 초기화되어 있지 않으므로 오류 발생
+  print(name?.length ?? "0"); // name이 null이면 length가 오류남
+  // ??로 null값이 왔을 때 처리 가능
+
+  print(
+    name?.length?.bitLength?.bitLength ?? "unnamed",
+  ); // name이 null이면 length가 오류남
+}
